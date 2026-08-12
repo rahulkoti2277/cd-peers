@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="What our peers say about working at the Computer Department.">
+<title>Working at Computer Department</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Official jw.org brand blue (RGB 74,109,167) */
+    --jw-blue:      #4a6da7;
+    --jw-blue-dark: #3a577f;
+    --jw-navy:      #1f3a5f;
+    --card:         #ffffff;
+    --text:         #2b2b2b;
+    --text-soft:    #5f6a76;
+    --hairline:     #e3e7ec;
+    --shadow:       0 1px 3px rgba(31,58,95,.10), 0 8px 24px rgba(31,58,95,.10);
+    --shadow-hover: 0 4px 10px rgba(31,58,95,.16), 0 16px 40px rgba(31,58,95,.20);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html, body{ height:100%; }
+
+  body{
+    font-family:'Noto Sans', -apple-system, "Segoe UI", sans-serif;
+    color:var(--text);
+    background:linear-gradient(180deg, #ffffff 0%, #eef2f7 100%);
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    height:100vh;
+    height:100dvh;            /* accounts for mobile browser chrome */
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;          /* the page itself never scrolls */
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    flex:0 0 auto;
+    background:linear-gradient(180deg, #4f73ae, var(--jw-blue));
+    height:52px;
+    display:flex;
+    align-items:center;
+    padding:0 clamp(16px,4vw,40px);
+    box-shadow:0 1px 0 rgba(0,0,0,.08);
+  }
+  .logo{
+    width:32px; height:32px;
+    background:#fff;
+    border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--jw-blue);
+    font-weight:800; font-size:12.5px; letter-spacing:.5px;
+  }
+  .logo-text{
+    color:#fff; font-weight:600; font-size:15px;
+    margin-left:12px; letter-spacing:.3px;
+  }
+
+  /* ---------- Headings ---------- */
+  .container{
+    flex:1 1 auto;
+    min-height:0;
+    width:100%;
+    max-width:1240px;
+    margin:0 auto;
+    padding:clamp(14px,2.6vh,30px) clamp(18px,4vw,40px);
+    display:flex;
+    flex-direction:column;
+  }
+  h1{
+    flex:0 0 auto;
+    font-size:clamp(20px,3.6vw,38px);
+    font-weight:700;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--jw-navy);
+    text-align:center;
+    line-height:1.15;
+  }
+  .subhead{
+    flex:0 0 auto;
+    text-align:center;
+    color:var(--text-soft);
+    font-size:clamp(14px,2vw,19px);
+    margin-top:clamp(6px,1.2vh,12px);
+  }
+  .divider{
+    flex:0 0 auto;
+    width:64px; height:3px;
+    background:var(--jw-blue);
+    border-radius:2px;
+    margin:clamp(12px,1.8vh,22px) auto 0;
+  }
+
+  /* ---------- Video grid (5 videos + Play All = 6 tiles) ---------- */
+  .grid{
+    flex:1 1 auto;
+    min-height:0;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:repeat(2, 1fr);
+    gap:clamp(12px,2vh,24px);
+    margin-top:clamp(14px,2.6vh,28px);
+    width:100%;
+  }
+  .card{
+    position:relative;
+    min-height:0; min-width:0;
+    display:flex;
+    flex-direction:column;
+    background:var(--card);
+    border-radius:10px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    transition:transform .25s ease, box-shadow .25s ease;
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .55s ease forwards;
+  }
+  .card:nth-child(1){ animation-delay:.05s; }
+  .card:nth-child(2){ animation-delay:.12s; }
+  .card:nth-child(3){ animation-delay:.19s; }
+  .card:nth-child(4){ animation-delay:.26s; }
+  .card:nth-child(5){ animation-delay:.33s; }
+  .card:nth-child(6){ animation-delay:.40s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion: reduce){
+    .card{ animation:none; opacity:1; transform:none; }
+  }
+
+  .card:hover, .card:focus-visible{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow-hover);
+    outline:none;
+  }
+
+  /* Thumbnail area */
+  .thumb{
+    position:relative;
+    flex:1 1 auto;
+    min-height:0;
+    background-size:cover;
+    background-position:center;
+  }
+  /* Placeholder gradients shown until real poster images exist */
+  .card:nth-child(1) .thumb{ background-image:linear-gradient(135deg,#4a6da7,#2b4470); }
+  .card:nth-child(2) .thumb{ background-image:linear-gradient(135deg,#5a7bb5,#34507f); }
+  .card:nth-child(3) .thumb{ background-image:linear-gradient(135deg,#3f608f,#22395d); }
+  .card:nth-child(4) .thumb{ background-image:linear-gradient(135deg,#5470a0,#2e466f); }
+  .card:nth-child(5) .thumb{ background-image:linear-gradient(135deg,#48699f,#263e63); }
+
+  .thumb .poster{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+  }
+  .badge{
+    position:absolute;
+    right:8px; bottom:8px;
+    background:rgba(0,0,0,.65);
+    color:#fff;
+    font-size:11.5px;
+    font-weight:500;
+    padding:2px 7px;
+    border-radius:4px;
+    letter-spacing:.3px;
+  }
+  .play{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .play-circle{
+    width:clamp(44px,7vh,64px);
+    height:clamp(44px,7vh,64px);
+    border-radius:50%;
+    background:rgba(255,255,255,.92);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.30);
+    transition:transform .25s ease, background .25s ease;
+  }
+  .card:hover .play-circle{ transform:scale(1.1); background:#fff; }
+  .play-circle::after{
+    content:"";
+    width:0; height:0;
+    border-left:clamp(14px,2.2vh,20px) solid var(--jw-blue);
+    border-top:clamp(9px,1.4vh,12px) solid transparent;
+    border-bottom:clamp(9px,1.4vh,12px) solid transparent;
+    margin-left:5px;
+  }
+
+  /* Caption bar under the thumbnail (jw.org video-tile style) */
+  .meta{
+    flex:0 0 auto;
+    padding:clamp(7px,1.3vh,12px) clamp(12px,1.4vw,16px) clamp(8px,1.4vh,13px);
+    border-top:1px solid var(--hairline);
+    background:var(--card);
+  }
+  .meta .name{
+    display:block;
+    color:var(--jw-navy);
+    font-weight:600;
+    font-size:clamp(13px,1.9vh,16px);
+    line-height:1.25;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .meta .role{
+    display:block;
+    color:var(--text-soft);
+    font-size:clamp(11px,1.5vh,13px);
+    margin-top:1px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  /* Play All tile */
+  .card.playall .thumb{
+    background-image:linear-gradient(135deg, #4f73ae, var(--jw-navy));
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card.playall .thumb svg{
+    width:clamp(40px,6.4vh,58px);
+    height:clamp(40px,6.4vh,58px);
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.35));
+    transition:transform .25s ease;
+  }
+  .card.playall:hover .thumb svg{ transform:scale(1.12); }
+
+  /* Narrow screens: 2 columns x 3 rows, still no scrolling */
+  @media (max-width:680px){
+    .grid{
+      grid-template-columns:repeat(2, 1fr);
+      grid-template-rows:repeat(3, 1fr);
+    }
+  }
+
+  footer{
+    flex:0 0 auto;
+    text-align:center;
+    color:var(--text-soft);
+    font-size:11.5px;
+    padding:7px 20px;
+    border-top:1px solid var(--hairline);
+    background:#fff;
+  }
+
+  /* ---------- Fullscreen player ---------- */
+  .player-overlay{
+    position:fixed; inset:0;
+    background:#000;
+    z-index:9999;
+    display:none;
+  }
+  .player-overlay.active{ display:block; }
+  .player-overlay video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:contain;
+    background:#000;
+  }
+
+  /* Player UI layer (fades out while watching) */
+  .pui{
+    position:absolute; inset:0;
+    pointer-events:none;
+    transition:opacity .35s ease;
+  }
+  .pui.hide{ opacity:0; }
+  .scrim-top{
+    position:absolute; top:0; left:0; right:0;
+    height:120px;
+    background:linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,0));
+  }
+  .now{
+    position:absolute;
+    top:max(18px, env(safe-area-inset-top));
+    left:max(20px, env(safe-area-inset-left));
+    right:88px;
+    color:#fff;
+  }
+  .now .n{
+    font-weight:600;
+    font-size:clamp(15px,2.2vh,18px);
+    text-shadow:0 1px 4px rgba(0,0,0,.6);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .now .c{
+    font-size:13px;
+    opacity:.85;
+    margin-top:2px;
+    text-shadow:0 1px 4px rgba(0,0,0,.6);
+  }
+  .pbtn{
+    pointer-events:auto;
+    position:absolute;
+    width:50px; height:50px;
+    border:none; border-radius:50%;
+    background:rgba(20,20,20,.55);
+    backdrop-filter:blur(4px);
+    color:#fff;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .pbtn:hover{ background:rgba(20,20,20,.8); transform:scale(1.06); }
+  .pui.hide .pbtn{ pointer-events:none; }
+
+  #closeBtn{
+    top:max(16px, env(safe-area-inset-top));
+    right:max(16px, env(safe-area-inset-right));
+  }
+  #closeBtn::before, #closeBtn::after{
+    content:""; position:absolute;
+    width:20px; height:2.4px;
+    background:#fff; border-radius:2px;
+  }
+  #closeBtn::before{ transform:rotate(45deg); }
+  #closeBtn::after{  transform:rotate(-45deg); }
+
+  #muteBtn{
+    right:max(16px, env(safe-area-inset-right));
+    bottom:max(16px, env(safe-area-inset-bottom));
+  }
+  #muteBtn .ic-off{ display:none; }
+  #muteBtn.muted .ic-on{ display:none; }
+  #muteBtn.muted .ic-off{ display:block; }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="logo">CD</div>
+    <span class="logo-text">Computer Department</span>
+  </header>
+
+  <main class="container">
+    <h1>Working at Computer Department</h1>
+    <p class="subhead">What your peers say:</p>
+    <div class="divider"></div>
+    <section class="grid" id="grid"><!-- tiles injected by JS --></section>
+  </main>
+
+  <footer>Computer Department</footer>
+
+  <!-- Fullscreen player -->
+  <div class="player-overlay" id="playerOverlay">
+    <video id="playerVideo" playsinline webkit-playsinline preload="auto"></video>
+    <div class="pui" id="pui">
+      <div class="scrim-top"></div>
+      <div class="now">
+        <div class="n" id="nowName"></div>
+        <div class="c" id="nowCount"></div>
+      </div>
+      <button class="pbtn" id="closeBtn" aria-label="Close video"></button>
+      <button class="pbtn" id="muteBtn" aria-label="Mute or unmute">
+        <svg class="ic-on" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#fff"/>
+          <path d="M16.5 8.7a4.7 4.7 0 0 1 0 6.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <path d="M19 6.2a8.2 8.2 0 0 1 0 11.6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg class="ic-off" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#fff"/>
+          <path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+<script>
+  /* ============================================================
+     EDIT THIS LIST if filenames change.
+     - src:    video file (H.264 MP4), next to index.html
+     - poster: thumbnail still image, next to index.html
+       (a blue gradient shows automatically if the image is missing)
+     - name / role: caption under each tile
+     ============================================================ */
+  const VIDEOS = [
+    { src: "video1.mp4", poster: "poster1.jpg", name: "Kirsten", role: "Application Services" },
+    { src: "video2.mp4", poster: "poster2.jpg", name: "Asiphe",  role: "Server / Network Team" },
+    { src: "video3.mp4", poster: "poster3.jpg", name: "Mbali",   role: "Office" },
+    { src: "video4.mp4", poster: "poster4.jpg", name: "Jaiden",  role: "User Support" },
+    { src: "video5.mp4", poster: "poster5.jpg", name: "CD Remote/Commuter", role: "" },
+  ];
+
+  /* ---------------- Build the grid ---------------- */
+  const grid = document.getElementById("grid");
+  const badgeEls = [];
+
+  VIDEOS.forEach((v, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Play video: " + v.name);
+
+    card.innerHTML = `
+      <div class="thumb">
+        ${v.poster ? `<img class="poster" src="${v.poster}" alt="" onerror="this.style.display='none'">` : ""}
+        <span class="badge" hidden></span>
+        <div class="play"><div class="play-circle"></div></div>
+      </div>
+      <div class="meta">
+        <span class="name">${v.name}</span>
+        ${v.role ? `<span class="role">${v.role}</span>` : `<span class="role">&nbsp;</span>`}
+      </div>`;
+
+    badgeEls.push(card.querySelector(".badge"));
+
+    const open = () => startSession([i], false);
+    card.addEventListener("click", open);
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+    });
+    grid.appendChild(card);
+  });
+
+  // Play All tile
+  const pa = document.createElement("div");
+  pa.className = "card playall";
+  pa.tabIndex = 0;
+  pa.setAttribute("role", "button");
+  pa.setAttribute("aria-label", "Play all videos on repeat");
+  pa.innerHTML = `
+    <div class="thumb">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4.5 5v14l8.5-7-8.5-7z" fill="#fff"/>
+        <path d="M13.5 5v14l8.5-7-8.5-7z" fill="#fff" opacity=".8"/>
+      </svg>
+    </div>
+    <div class="meta">
+      <span class="name">Play All</span>
+      <span class="role">All five videos &middot; repeats until closed</span>
+    </div>`;
+  const openAll = () => startSession([0,1,2,3,4], true);
+  pa.addEventListener("click", openAll);
+  pa.addEventListener("keydown", e => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openAll(); }
+  });
+  grid.appendChild(pa);
+
+  /* ---------------- Duration badges (auto-filled from the files) ---------------- */
+  function fmt(s){
+    s = Math.round(s);
+    return Math.floor(s/60) + ":" + String(s%60).padStart(2,"0");
+  }
+  VIDEOS.forEach((v, i) => {
+    const t = document.createElement("video");
+    t.preload = "metadata";
+    t.muted = true;
+    t.src = v.src;
+    t.addEventListener("loadedmetadata", () => {
+      if (isFinite(t.duration) && t.duration > 0) {
+        badgeEls[i].textContent = fmt(t.duration);
+        badgeEls[i].hidden = false;
+      }
+      t.removeAttribute("src"); t.load();
+    });
+    // If the file doesn't exist yet, the badge simply stays hidden.
+  });
+
+  /* ---------------- Player ---------------- */
+  const overlay  = document.getElementById("playerOverlay");
+  const video    = document.getElementById("playerVideo");
+  const pui      = document.getElementById("pui");
+  const nowName  = document.getElementById("nowName");
+  const nowCount = document.getElementById("nowCount");
+  const closeBtn = document.getElementById("closeBtn");
+  const muteBtn  = document.getElementById("muteBtn");
+
+  let playlist = [], playIdx = 0, loopAll = false;
+  let active = false, switching = false, uiTimer = null;
+
+  function enterFullscreen(el){
+    const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+    if (fn) { try { fn.call(el); } catch(e){} }
+  }
+  function exitFullscreen(){
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      const fn = document.exitFullscreen || document.webkitExitFullscreen;
+      if (fn) { try { fn.call(document); } catch(e){} }
+    }
+  }
+
+  function syncMute(){ muteBtn.classList.toggle("muted", video.muted); }
+
+  function wakeUI(){
+    pui.classList.remove("hide");
+    clearTimeout(uiTimer);
+    uiTimer = setTimeout(() => { if (active) pui.classList.add("hide"); }, 3000);
+  }
+
+  function startSession(list, loop){
+    playlist = list; playIdx = 0; loopAll = loop; active = true;
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+    video.muted = false; syncMute();
+    muteBtn.style.display = loop ? "flex" : "none";
+    loadCurrent();
+    enterFullscreen(overlay);
+  }
+
+  function loadCurrent(){
+    switching = true;
+    const v = VIDEOS[playlist[playIdx]];
+    nowName.textContent  = v.name + (v.role ? " — " + v.role : "");
+    nowCount.textContent = loopAll
+      ? "Video " + (playIdx+1) + " of " + playlist.length + " · playing on repeat"
+      : "";
+    video.src = v.src;
+    const done = () => { switching = false; };
+    const p = video.play();
+    if (p && p.then) {
+      p.then(done).catch(() => {
+        // Autoplay with sound was blocked (rare) — continue muted so the
+        // loop never stalls, and show the unmute button so sound is one tap away.
+        video.muted = true; syncMute();
+        muteBtn.style.display = "flex";
+        const q = video.play();
+        if (q && q.finally) q.finally(done); else done();
+      });
+    } else done();
+    wakeUI();
+  }
+
+  function closeVideo(){
+    active = false; switching = false;
+    clearTimeout(uiTimer);
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+    exitFullscreen();
+  }
+
+  // End of a video: advance the loop, or close in single mode.
+  video.addEventListener("ended", () => {
+    if (!active) return;
+    if (loopAll) { playIdx = (playIdx + 1) % playlist.length; loadCurrent(); }
+    else closeVideo();
+  });
+
+  closeBtn.addEventListener("click", closeVideo);
+  muteBtn.addEventListener("click", () => { video.muted = !video.muted; syncMute(); wakeUI(); });
+
+  // No pausing: if anything pauses playback mid-video, resume it.
+  video.addEventListener("pause", () => {
+    if (active && !switching && !video.ended) { video.play().catch(()=>{}); }
+  });
+  video.addEventListener("click", e => e.preventDefault());
+  video.addEventListener("contextmenu", e => e.preventDefault());
+
+  // Keyboard: Esc closes; play/seek shortcuts are blocked while watching.
+  document.addEventListener("keydown", e => {
+    if (!active) return;
+    if (e.key === "Escape") { e.preventDefault(); closeVideo(); return; }
+    const blocked = [" ", "k", "K", "m", "M", "f", "F", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+    if (blocked.includes(e.key)) e.preventDefault();
+  });
+
+  // Any tap or mouse movement brings the close/mute controls back.
+  overlay.addEventListener("pointermove", wakeUI);
+  overlay.addEventListener("pointerdown", wakeUI);
+
+  // If native fullscreen is force-exited mid-video, the black overlay still
+  // covers the page and playback continues; the close button remains the exit.
+</script>
+</body>
+</html>
