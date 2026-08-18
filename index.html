@@ -160,6 +160,19 @@
     width:100%; height:100%;
     object-fit:cover;
   }
+  /* Two-image side-by-side thumbnail (used for the CD Remote/Commuter tile) */
+  .poster-split{
+    position:absolute; inset:0;
+    display:flex;
+  }
+  .poster-split img{
+    width:50%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .poster-split img:first-child{
+    border-right:2px solid rgba(255,255,255,.85);
+  }
   .badge{
     position:absolute;
     right:8px; bottom:8px;
@@ -383,7 +396,7 @@
     { src: "video2.mp4", poster: "poster2.jpg", name: "Asiphe",  role: "Server / Network Team" },
     { src: "video3.mp4", poster: "poster3.jpg", name: "Mbali",   role: "Office" },
     { src: "video4.mp4", poster: "poster4.jpg", name: "Jaiden",  role: "User Support" },
-    { src: "video5.mp4", poster: "poster5.jpg", name: "CD Remote/Commuter", role: "" },
+    { src: "video5.mp4", posters: ["poster5a.jpg", "poster5b.jpg"], name: "Bille & Amy", role: "Remote/Commuter" },
   ];
 
   /* ---------------- Build the grid ---------------- */
@@ -397,9 +410,19 @@
     card.setAttribute("role", "button");
     card.setAttribute("aria-label", "Play video: " + v.name);
 
+    let posterHTML = "";
+    if (v.posters && v.posters.length === 2) {
+      posterHTML = `<div class="poster-split">
+        <img src="${v.posters[0]}" alt="" onerror="this.style.display='none'">
+        <img src="${v.posters[1]}" alt="" onerror="this.style.display='none'">
+      </div>`;
+    } else if (v.poster) {
+      posterHTML = `<img class="poster" src="${v.poster}" alt="" onerror="this.style.display='none'">`;
+    }
+
     card.innerHTML = `
       <div class="thumb">
-        ${v.poster ? `<img class="poster" src="${v.poster}" alt="" onerror="this.style.display='none'">` : ""}
+        ${posterHTML}
         <span class="badge" hidden></span>
         <div class="play"><div class="play-circle"></div></div>
       </div>
