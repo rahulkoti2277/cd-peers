@@ -49,12 +49,12 @@
     box-shadow:0 1px 0 rgba(0,0,0,.08);
   }
   .logo{
-    width:32px; height:32px;
+    height:34px;
+    width:auto;
+    display:block;
     background:#fff;
     border-radius:6px;
-    display:flex; align-items:center; justify-content:center;
-    color:var(--jw-blue);
-    font-weight:800; font-size:12.5px; letter-spacing:.5px;
+    padding:2px 6px;
   }
   .logo-text{
     color:#fff; font-weight:600; font-size:15px;
@@ -333,7 +333,7 @@
 <body>
 
   <header class="topbar">
-    <div class="logo">CD</div>
+    <img class="logo" src="logo.png" alt="Computer Department South Africa">
     <span class="logo-text">Computer Department</span>
   </header>
 
@@ -474,6 +474,24 @@
   let playlist = [], playIdx = 0, loopAll = false;
   let active = false, switching = false, uiTimer = null;
 
+  /* ---- Volume boost: browsers cap native <video> volume at 100%, so we
+     route audio through a Web Audio gain node to push it louder. ---- */
+  let audioCtx = null, gainNode = null, boosted = false;
+  const VOLUME_BOOST = 1.8;   // 1.0 = normal, 1.8 = ~80% louder. Raise/lower if it distorts.
+  function setupAudioBoost(){
+    if (boosted) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const src = audioCtx.createMediaElementSource(video);
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = VOLUME_BOOST;
+      src.connect(gainNode).connect(audioCtx.destination);
+      boosted = true;
+    } catch(e) {
+      // Web Audio unavailable — video simply plays at its normal volume.
+    }
+  }
+
   function enterFullscreen(el){
     const fn = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
     if (fn) { try { fn.call(el); } catch(e){} }
@@ -498,7 +516,10 @@
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
     video.muted = false; syncMute();
+    video.controls = !loop;              // normal pause/play controls for single videos; none for Play All
     muteBtn.style.display = loop ? "flex" : "none";
+    setupAudioBoost();
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
     loadCurrent();
     enterFullscreen(overlay);
   }
@@ -547,17 +568,20 @@
   closeBtn.addEventListener("click", closeVideo);
   muteBtn.addEventListener("click", () => { video.muted = !video.muted; syncMute(); wakeUI(); });
 
-  // No pausing: if anything pauses playback mid-video, resume it.
+  // During Play All, playback can't be paused or scrubbed — it's meant to run
+  // hands-off until closed. Single videos keep their normal native controls.
   video.addEventListener("pause", () => {
-    if (active && !switching && !video.ended) { video.play().catch(()=>{}); }
+    if (loopAll && active && !switching && !video.ended) { video.play().catch(()=>{}); }
   });
-  video.addEventListener("click", e => e.preventDefault());
+  video.addEventListener("click", e => { if (loopAll) e.preventDefault(); });
   video.addEventListener("contextmenu", e => e.preventDefault());
 
-  // Keyboard: Esc closes; play/seek shortcuts are blocked while watching.
+  // Keyboard: Esc always closes. Other shortcuts are only blocked during
+  // Play All — single videos respond to normal space/arrow-key controls.
   document.addEventListener("keydown", e => {
     if (!active) return;
     if (e.key === "Escape") { e.preventDefault(); closeVideo(); return; }
+    if (!loopAll) return;
     const blocked = [" ", "k", "K", "m", "M", "f", "F", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
     if (blocked.includes(e.key)) e.preventDefault();
   });
